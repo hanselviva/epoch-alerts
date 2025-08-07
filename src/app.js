@@ -14,9 +14,9 @@ import api from "./api/index.js";
 import * as middlewares from "./middlewares.js";
 
 const serverList = {
-  // "Login Server": { host: "game.project-epoch.net", port: 3724 },
-  Kezan: { host: "game.project-epoch.net", port: 8085 },
-  Gurubashi: { host: "game.project-epoch.net", port: 8086 },
+  "Login Server": { host: "game.project-epoch.net", port: 3724 },
+  "Kezan": { host: "game.project-epoch.net", port: 8085 },
+  "Gurubashi": { host: "game.project-epoch.net", port: 8086 },
 };
 
 const serverStates = {};
@@ -93,8 +93,12 @@ async function pollServers() {
 
 // Start polling every 15 seconds only if webhook URL is set
 if (WEBHOOK_URL) {
-  pollServers();
-  setInterval(pollServers, 15000);
+  async function startPolling() {
+    await pollServers();
+    setTimeout(startPolling, 3000);
+  }
+
+  startPolling();
 }
 else {
   console.warn("DISCORD_WEBHOOK is not set. Polling disabled.");
