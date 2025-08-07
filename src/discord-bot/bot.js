@@ -4,7 +4,7 @@ import jsonfile from "jsonfile";
 import { getTimeString, serverList } from "../app.js";
 import { checkServer } from "../utils/poller.js";
 
-const ALERT_CHANNELS_FILE = "./src/discord-bot/alert-channels.json";
+const ALERT_CHANNELS_FILE = process.env.NODE_ENV === "production" ? "/mnt/data/alert-channels.json" : "./src/discord-bot/alert-channels.json";
 
 async function getAlertChannels() {
   try {
