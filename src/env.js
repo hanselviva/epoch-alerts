@@ -6,7 +6,6 @@ const envSchema = z.object({
 });
 
 try {
-  // eslint-disable-next-line node/no-process-env
   envSchema.parse(process.env);
 }
 catch (error) {
@@ -19,5 +18,4 @@ catch (error) {
   process.exit(1);
 }
 
-// eslint-disable-next-line node/no-process-env
 export const env = envSchema.parse(process.env);
