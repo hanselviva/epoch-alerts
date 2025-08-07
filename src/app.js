@@ -45,7 +45,8 @@ async function notifyDiscord(serverName, isOnline) {
   if (!WEBHOOK_URL)
     return; // Skip if no webhook URL set
 
-  const status = isOnline ? "🟢 ONLINE" : "🔴 OFFLINE";
+  const statusText = isOnline ? "ONLINE" : "OFFLINE";
+  const statusIcon = isOnline ? "🟢" : "🔴";
   const time = getTimeString();
 
   try {
@@ -53,7 +54,9 @@ async function notifyDiscord(serverName, isOnline) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        content: `📡 **${serverName}** is now ${status}\n🕒 ${time}`,
+        content:
+        `${statusIcon} **${serverName}** is now ${statusText}
+        ${time}`,
       }),
     });
   }
