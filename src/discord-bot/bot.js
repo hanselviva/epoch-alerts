@@ -1,6 +1,6 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import { getTimeString, serverList } from "../app.js";
-import { checkServer } from "../discord-webhook/webhook.js";
+import { checkServer } from "../utils/poller.js";
 
 const TOKEN = process.env.DISCORD_TOKEN;
 

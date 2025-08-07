@@ -4,8 +4,10 @@ import helmet from "helmet";
 import morgan from "morgan";
 
 import { startDiscordBot } from "./discord-bot/bot.js";
-import { checkServer, notifyDiscordWebhook, startServerPolling } from "./discord-webhook/webhook.js";
+import { notifyDiscordWebhook } from "./discord-webhook/webhook.js";
 import * as middlewares from "./middlewares.js";
+
+import { checkServer, startServerPolling } from "./utils/poller.js";
 
 export const serverList = {
   // "Login Server": { host: "game.project-epoch.net", port: 3724 },
