@@ -15,7 +15,7 @@ export const serverList = {
   Gurubashi: { host: "game.project-epoch.net", port: 8086 },
 };
 export function getTimeString() {
-  return new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" });
+  return `${new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" })} PST`;
 }
 
 // ----------------------
