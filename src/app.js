@@ -78,7 +78,7 @@ async function pollServers() {
         lastOnline: null,
         lastChange: getTimeString(),
       };
-      await notifyDiscord(name, current);
+      // await notifyDiscord(name, current);
     }
     else if (current !== previous) {
       serverStates[name].lastOnline = previous;
