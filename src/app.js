@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import api from "./api/index.js";
 
+import { startDiscordBot } from "./discord-bot/bot.js";
 import { checkServer, notifyDiscordWebhook, startServerPolling } from "./discord-webhook/webhook.js";
 import * as middlewares from "./middlewares.js";
 
@@ -18,10 +19,12 @@ export function getTimeString() {
 
 // ----------------------
 // Server polling for webhook
-// ----------------------
 startServerPolling();
 // ----------------------
-// Server Polling for webhook
+
+// ----------------------
+// Turn Discord bot online
+startDiscordBot();
 // ----------------------
 
 const app = express();

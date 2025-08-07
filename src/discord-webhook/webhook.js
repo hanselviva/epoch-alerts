@@ -1,9 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable node/no-process-env */
-
-// ----------------------
-// Background polling logic
-// ----------------------
 import fetch from "node-fetch";
 import { getTimeString, serverList } from "../app.js";
 
@@ -62,7 +56,7 @@ async function pollServers() {
         lastOnline: null,
         lastChange: getTimeString(),
       };
-      await notifyDiscordWebhook(name, current);
+      // await notifyDiscordWebhook(name, current);
     }
     else if (current !== previous) {
       serverStates[name].lastOnline = previous;
