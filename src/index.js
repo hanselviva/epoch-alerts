@@ -2,9 +2,7 @@ import app from "./app.js";
 import { env } from "./env.js";
 
 const server = app.listen(env.PORT, () => {
-  /* eslint-disable no-console */
   console.log(`Listening: http://localhost:${env.PORT}`);
-  /* eslint-enable no-console */
 });
 
 server.on("error", (err) => {
