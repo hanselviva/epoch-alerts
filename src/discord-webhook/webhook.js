@@ -21,7 +21,7 @@ export async function checkServer(host, port) {
 
 export async function notifyDiscordWebhook(serverName, isOnline) {
   if (!WEBHOOK_URL)
-    return; // Skip if no webhook URL set
+    return;
 
   const statusText = isOnline ? "ONLINE" : "OFFLINE";
   const statusIcon = isOnline ? "🟢" : "🔴";

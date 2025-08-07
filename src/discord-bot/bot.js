@@ -2,10 +2,12 @@ import { Client, GatewayIntentBits } from "discord.js";
 import { getTimeString, serverList } from "../app.js";
 import { checkServer } from "../discord-webhook/webhook.js";
 
-// Hardcoded token (replace with your actual token)
 const TOKEN = process.env.DISCORD_TOKEN;
 
 export async function startDiscordBot() {
+  if (!TOKEN)
+    return;
+
   const client = new Client({
     intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
   });

@@ -2,7 +2,6 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import api from "./api/index.js";
 
 import { startDiscordBot } from "./discord-bot/bot.js";
 import { checkServer, notifyDiscordWebhook, startServerPolling } from "./discord-webhook/webhook.js";
@@ -67,8 +66,6 @@ app.post("/test-webhook", async (req, res) => {
     res.status(500).json({ error: "Failed to send test." });
   }
 });
-
-app.use("/api/v1", api);
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
