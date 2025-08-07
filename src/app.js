@@ -139,6 +139,16 @@ app.get("/", async (req, res) => {
   }
 });
 
+app.post("/test-webhook", async (req, res) => {
+  try {
+    await notifyDiscord("Test Server", true);
+    res.json({ message: "Test message sent." });
+  }
+  catch {
+    res.status(500).json({ error: "Failed to send test." });
+  }
+});
+
 app.use("/api/v1", api);
 
 app.use(middlewares.notFound);
