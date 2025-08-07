@@ -1,9 +1,37 @@
 import { Client, GatewayIntentBits } from "discord.js";
+import jsonfile from "jsonfile";
+
 import { getTimeString, serverList } from "../app.js";
 import { checkServer } from "../utils/poller.js";
 
-const TOKEN = process.env.DISCORD_TOKEN;
+const ALERT_CHANNELS_FILE = "./src/discord-bot/alert-channels.json";
 
+async function getAlertChannels() {
+  try {
+    return await jsonfile.readFile(ALERT_CHANNELS_FILE);
+  }
+  catch {
+    return [];
+  }
+}
+
+async function addAlertChannel(channelId) {
+  console.log("addAlertChannel", channelId);
+  const channels = await getAlertChannels();
+  if (!channels.includes(channelId)) {
+    channels.push(channelId);
+    await jsonfile.writeFile(ALERT_CHANNELS_FILE, channels, { spaces: 2 });
+  }
+}
+
+async function removeAlertChannel(channelId) {
+  console.log("removeAlertChannel", channelId);
+  const channels = await getAlertChannels();
+  const updated = channels.filter(id => id !== channelId);
+  await jsonfile.writeFile(ALERT_CHANNELS_FILE, updated, { spaces: 2 });
+}
+
+const TOKEN = process.env.DISCORD_TOKEN;
 export async function startDiscordBot() {
   if (!TOKEN)
     return;
@@ -40,11 +68,10 @@ export async function startDiscordBot() {
           results.map(s => `**${s.name}**: ${s.status}`).join("\n")}
    
 This bot will now **start** alerting this channel when there are changes in server status.
-Type STOP to stop getting alerts in this channel.`;
-
-        // ADD logic: add the channel to an external file so keep track of which channel to notify
+Type \`!stop epoch status alerts\` to stop getting alerts in this channel.`;
 
         message.channel.send(replyText);
+        await addAlertChannel(message.channel.id);
       }
       catch (err) {
         console.error("Error checking servers:", err);
@@ -54,11 +81,47 @@ Type STOP to stop getting alerts in this channel.`;
 
     // stopping alert
     if (message.content.toLowerCase() === "!stop epoch status alerts") {
-      message.channel.send(`This bot will now **stop** alerting this channel when there are changes in server status.`);
+      message.channel.send(
+        `
+This bot will now **stop** alerting this channel when there are changes in server status.
+Type \`!start epoch status alerts\` to start getting alerts in this channel.`,
+      );
 
-      // ADD logic: remove the channel from an external file so keep track of which channel to notify
+      await removeAlertChannel(message.channel.id);
     }
   });
 
   client.login(TOKEN);
+};
+
+export async function notifyDiscordBot(serverName, isOnline) {
+  const channels = await getAlertChannels();
+
+  if (!TOKEN || channels.length === 0) {
+    console.warn("Bot token missing or no channels to notify.");
+    return;
+  }
+
+  const client = new Client({
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
+  });
+
+  await client.login(TOKEN);
+
+  const statusText = isOnline ? "🟢 Online" : "🔴 Offline";
+  const time = getTimeString();
+
+  for (const channelId of channels) {
+    try {
+      const channel = await client.channels.fetch(channelId);
+      if (channel && channel.isTextBased()) {
+        await channel.send(`**${serverName}** is now **${statusText}** as of **${time}**`);
+      }
+    }
+    catch (err) {
+      console.error(`Failed to send alert to channel ${channelId}`, err);
+    }
+  }
+
+  await client.destroy();
 }

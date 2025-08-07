@@ -1,5 +1,6 @@
 import fetch from "node-fetch";
 import { getTimeString, serverList } from "../app.js";
+import { notifyDiscordBot } from "../discord-bot/bot.js";
 import { notifyDiscordWebhook } from "../discord-webhook/webhook.js";
 
 const serverStates = {};
@@ -33,13 +34,15 @@ async function pollServers() {
         lastOnline: null,
         lastChange: getTimeString(),
       };
-      // await notifyDiscordWebhook(name, current);
+    //   await notifyDiscordWebhook(name, current);
+    //   await notifyDiscordBot(name, current);
     }
     else if (current !== previous) {
       serverStates[name].lastOnline = previous;
       serverStates[name].lastChange = getTimeString();
       serverStates[name].online = current;
       await notifyDiscordWebhook(name, current);
+      await notifyDiscordBot(name, current);
     }
   }
 
