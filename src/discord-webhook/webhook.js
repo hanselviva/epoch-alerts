@@ -39,7 +39,7 @@ export async function notifyDiscordWebhook(serverName, isOnline) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         content:
-        `${statusIcon} **${serverName}** is now ${statusText}
+        `${statusIcon}  **${serverName}** is now ${statusText}
         ${time}`,
       }),
     });
