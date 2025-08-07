@@ -91,7 +91,7 @@ async function pollServers() {
   console.log(`[${getTimeString()}] ------------Polling done.`);
 }
 
-// Start polling every 15 seconds only if webhook URL is set
+// Start polling every 3 seconds only if webhook URL is set
 if (WEBHOOK_URL) {
   async function startPolling() {
     await pollServers();
