@@ -50,6 +50,31 @@ export async function startDiscordBot() {
     if (message.author.bot)
       return;
 
+    // get current status
+    if (message.content.toLowerCase() === "!epoch status") {
+      try {
+        const results = await Promise.all(
+          Object.entries(serverList).map(async ([name, { host, port }]) => {
+            const isOnline = await checkServer(host, port);
+            return {
+              name,
+              online: isOnline,
+              status: isOnline ? "🟢 Online" : "🔴 Offline",
+            };
+          }),
+        );
+
+        const replyText = `Server Status as of **${getTimeString()}**\n\n${
+          results.map(s => `**${s.name}**: ${s.status}`).join("\n")}`;
+
+        message.channel.send(replyText);
+      }
+      catch (err) {
+        console.error("Error checking servers:", err);
+        message.channel.send("Sorry, something went wrong.");
+      }
+    }
+
     // starting alerts
     if (message.content.toLowerCase() === "!start epoch status alerts") {
       try {
@@ -79,7 +104,7 @@ Type \`!stop epoch status alerts\` to stop getting alerts in this channel.`;
       }
     }
 
-    // stopping alert
+    // stopping alerts
     if (message.content.toLowerCase() === "!stop epoch status alerts") {
       message.channel.send(
         `
