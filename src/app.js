@@ -1,13 +1,16 @@
 import cors from "cors";
+// initialize Discord client
+import { Client, GatewayIntentBits, Partials } from "discord.js";
 import express from "express";
 import helmet from "helmet";
-import morgan from "morgan";
 
+import morgan from "morgan";
 import { startDiscordBot } from "./discord-bot/bot.js";
 import { notifyDiscordWebhook } from "./discord-webhook/webhook.js";
-import * as middlewares from "./middlewares.js";
 
+import * as middlewares from "./middlewares.js";
 import { startUserReactionListener } from "./user-reaction-listener/reaction-listener.js";
+
 import { checkServer, startServerPolling } from "./utils/poller.js";
 
 export const serverList = {
@@ -19,20 +22,24 @@ export function getTimeString() {
   return `${new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" })} PST`;
 }
 
-// ----------------------
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildMessageReactions,
+    GatewayIntentBits.MessageContent,
+  ],
+  partials: [Partials.Message, Partials.Channel, Partials.Reaction],
+});
+
 // Server polling for webhook
 startServerPolling();
-// ----------------------
 
-// ----------------------
 // Turn Discord Epoch Status Bot online
-startDiscordBot();
-// ----------------------
+startDiscordBot(client);
 
-// ----------------------
 // Turn user reaction bot listener online
-startUserReactionListener();
-// ----------------------
+startUserReactionListener(client);
 
 const app = express();
 

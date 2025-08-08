@@ -37,19 +37,9 @@ const TOKEN = process.env.DISCORD_TOKEN;
 const TRACKED_MESSAGE_ID = process.env.DISCORD_ALERT_MESSAGE_ID;
 const TRACKED_EMOJI = process.env.DISCORD_ALERT_EMOJI || "🔔";
 
-export async function startUserReactionListener() {
+export async function startUserReactionListener(client) {
   if (!TOKEN || !TRACKED_MESSAGE_ID)
     return;
-
-  const client = new Client({
-    intents: [
-      GatewayIntentBits.Guilds,
-      GatewayIntentBits.GuildMessages,
-      GatewayIntentBits.GuildMessageReactions,
-      GatewayIntentBits.MessageContent,
-    ],
-    partials: [Partials.Message, Partials.Channel, Partials.Reaction],
-  });
 
   client.once("ready", () => {
     console.log(`Epoch Status Bot is now listening to user reaction as ${client.user.tag}`);

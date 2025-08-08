@@ -32,13 +32,9 @@ async function removeAlertChannel(channelId) {
 }
 
 const TOKEN = process.env.DISCORD_TOKEN;
-export async function startDiscordBot() {
+export async function startDiscordBot(client) {
   if (!TOKEN)
     return;
-
-  const client = new Client({
-    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
-  });
 
   client.once("ready", () => {
     console.log(`Epoch Status Bot is logged in as ${client.user.tag}`);
