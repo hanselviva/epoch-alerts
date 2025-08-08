@@ -23,8 +23,6 @@ export async function checkServer(host, port) {
 }
 
 async function pollServers() {
-  console.log(`[${getTimeString()}] ------------Polling started.------------`);
-
   for (const [name, { host, port }] of Object.entries(serverList)) {
     const previous = serverStates[name]?.online ?? null;
     const current = await checkServer(host, port);
@@ -37,8 +35,12 @@ async function pollServers() {
       };
     //   await notifyDiscordWebhook(name, current);
     //   await notifyDiscordBot(name, current);
+    //   await sendUserAlert(name, current);
     }
     else if (current !== previous) {
+      console.log(`**${name}** is now ${current}
+        ${getTimeString()}`);
+
       serverStates[name].lastOnline = previous;
       serverStates[name].lastChange = getTimeString();
       serverStates[name].online = current;
@@ -47,8 +49,6 @@ async function pollServers() {
       await sendUserAlert(name, current);
     }
   }
-
-  console.log(`[${getTimeString()}] ------------Polling done.`);
 }
 
 export async function startServerPolling() {
@@ -62,5 +62,6 @@ export async function startServerPolling() {
     setTimeout(startPolling, 3000);
   }
 
+  console.log(`[${getTimeString()}] ----Polling started.----`);
   startPolling();
 }
