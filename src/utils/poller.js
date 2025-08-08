@@ -66,7 +66,7 @@ export async function startServerPolling() {
 
   async function startPolling() {
     await pollServers();
-    setTimeout(startPolling, 10000);
+    setTimeout(startPolling, 45000);
   }
 
   startPolling();
