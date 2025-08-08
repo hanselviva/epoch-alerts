@@ -59,7 +59,7 @@ export async function startServerPolling() {
 
   async function startPolling() {
     await pollServers();
-    setTimeout(startPolling, 3000);
+    setTimeout(startPolling, 30000);
   }
 
   console.log(`[${getTimeString()}] ----Polling started.----`);
