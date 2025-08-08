@@ -41,7 +41,7 @@ export async function startDiscordBot() {
   });
 
   client.once("ready", () => {
-    console.log(`Logged in as ${client.user.tag}`);
+    console.log(`Epoch Status Bot is logged in as ${client.user.tag}`);
   });
 
   client.on("messageCreate", async (message) => {
