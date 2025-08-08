@@ -2,6 +2,7 @@ import fetch from "node-fetch";
 import { getTimeString, serverList } from "../app.js";
 import { notifyDiscordBot } from "../discord-bot/bot.js";
 import { notifyDiscordWebhook } from "../discord-webhook/webhook.js";
+import { sendUserAlert } from "../user-reaction-listener/reaction-listener.js";
 
 const serverStates = {};
 const WEBHOOK_URL = process.env.DISCORD_WEBHOOK;
@@ -43,6 +44,7 @@ async function pollServers() {
       serverStates[name].online = current;
       await notifyDiscordWebhook(name, current);
       await notifyDiscordBot(name, current);
+      await sendUserAlert(name, current);
     }
   }
 
