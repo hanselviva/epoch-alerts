@@ -7,6 +7,7 @@ import { startDiscordBot } from "./discord-bot/bot.js";
 import { notifyDiscordWebhook } from "./discord-webhook/webhook.js";
 import * as middlewares from "./middlewares.js";
 
+import { startUserReactionListener } from "./user-reaction-listener/reaction-listener.js";
 import { checkServer, startServerPolling } from "./utils/poller.js";
 
 export const serverList = {
@@ -24,8 +25,13 @@ startServerPolling();
 // ----------------------
 
 // ----------------------
-// Turn Discord bot online
+// Turn Discord Epoch Status Bot online
 startDiscordBot();
+// ----------------------
+
+// ----------------------
+// Turn user reaction bot listener online
+startUserReactionListener();
 // ----------------------
 
 const app = express();
