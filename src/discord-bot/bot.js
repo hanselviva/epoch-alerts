@@ -36,10 +36,6 @@ export async function startDiscordBot(client) {
   if (!TOKEN)
     return;
 
-  client.once("ready", () => {
-    console.log(`Epoch Status Bot is logged in as ${client.user.tag}`);
-  });
-
   client.on("messageCreate", async (message) => {
     // console.log(`[${message.author.tag}] said: ${message.content}`);
 

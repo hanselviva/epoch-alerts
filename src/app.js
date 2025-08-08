@@ -31,6 +31,9 @@ const client = new Client({
   ],
   partials: [Partials.Message, Partials.Channel, Partials.Reaction],
 });
+client.once("ready", () => {
+  console.log(`✅ Epoch Status Bot is logged in as ${client.user.tag} and listening to user reactions.`);
+});
 
 // Server polling for webhook
 startServerPolling();

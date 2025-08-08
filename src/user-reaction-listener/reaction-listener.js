@@ -41,10 +41,6 @@ export async function startUserReactionListener(client) {
   if (!TOKEN || !TRACKED_MESSAGE_ID)
     return;
 
-  client.once("ready", () => {
-    console.log(`Epoch Status Bot is now listening to user reaction as ${client.user.tag}`);
-  });
-
   // Handle reaction add
   client.on("messageReactionAdd", async (reaction, user) => {
     if (user.bot)
