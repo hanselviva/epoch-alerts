@@ -14,9 +14,9 @@ import { startUserReactionListener } from "./user-reaction-listener/reaction-lis
 import { checkServer, startServerPolling } from "./utils/poller.js";
 
 export const serverList = {
-  // "Login Server": { host: "162.19.28.88", port: 3724 },
-  Kezan: { host: "162.19.28.88", port: 8085 },
-  Gurubashi: { host: "162.19.28.88", port: 8086 },
+  "Login Server": { host: "162.19.28.88", port: 3724 },
+  "Kezan": { host: "162.19.28.88", port: 8085 },
+  "Gurubashi": { host: "162.19.28.88", port: 8086 },
 };
 export function getTimeString() {
   return `${new Date().toLocaleString("en-US", { timeZone: "America/Los_Angeles" })} PST`;
