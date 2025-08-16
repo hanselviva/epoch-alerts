@@ -42,7 +42,7 @@ async function pollServers() {
       };
       await notifyDiscordWebhook(name, current);
       await notifyDiscordBot(name, current);
-      await sendUserAlert(name, current);
+      // await sendUserAlert(name, current);
     }
     else if (current !== previous) {
       console.log(`**${name}** state changed}
@@ -66,7 +66,7 @@ export async function startServerPolling() {
 
   async function startPolling() {
     await pollServers();
-    setTimeout(startPolling, 45000);
+    setTimeout(startPolling, 60000);
   }
 
   startPolling();

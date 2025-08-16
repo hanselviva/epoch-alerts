@@ -17,7 +17,8 @@ export async function notifyDiscordWebhook(serverName, isOnline) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         content:
-        `${statusIcon}  **${serverName}** is now ${statusText}
+        `Testing new Ascension endpoint ---
+        ${statusIcon}  **${serverName}** is now ${statusText}
         ${time}`,
       }),
     });
