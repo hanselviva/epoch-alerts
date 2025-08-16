@@ -53,7 +53,7 @@ async function pollServers() {
       serverStates[name].online = current;
       await notifyDiscordWebhook(name, current);
       await notifyDiscordBot(name, current);
-      await sendUserAlert(name, current);
+      // await sendUserAlert(name, current);
     }
   }
 }
