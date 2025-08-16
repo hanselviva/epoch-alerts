@@ -40,9 +40,9 @@ async function pollServers() {
         lastOnline: null,
         lastChange: getTimeString(),
       };
-    //   await notifyDiscordWebhook(name, current);
-    //   await notifyDiscordBot(name, current);
-    //   await sendUserAlert(name, current);
+      await notifyDiscordWebhook(name, current);
+      await notifyDiscordBot(name, current);
+      await sendUserAlert(name, current);
     }
     else if (current !== previous) {
       console.log(`**${name}** state changed}

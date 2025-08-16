@@ -102,7 +102,8 @@ export async function sendUserAlert(serverName, isOnline) {
     try {
       const user = await client.users.fetch(userId);
       await user.send(
-        `**${serverName}** is now ${statusText} (as of ${time})`,
+        `Testing new Ascension endpoint ---
+**${serverName}** is now ${statusText} (as of ${time})`,
       );
     }
     catch (err) {
