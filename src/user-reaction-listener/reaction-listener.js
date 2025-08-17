@@ -80,6 +80,18 @@ export async function startUserReactionListener(client) {
     }
   });
 
+  // Handle member leaving the server
+  client.on("guildMemberRemove", async (member) => {
+    if (member.user.bot)
+      return;
+
+    const users = await getAlertUsers();
+    if (users.includes(member.user.id)) {
+      console.log(`User ${member.user.id} left the server, removing from alert list.`);
+      await removeAlertUser(member.user.id);
+    }
+  });
+
   await client.login(TOKEN);
 }
 
