@@ -15,7 +15,7 @@ import { checkServer, startServerPolling } from "./utils/poller.js";
 
 export const serverList = {
   // "Login Server": { host: "162.19.28.88", port: 3724 },
-  Kezan: { host: "162.19.28.88", port: 8085 },
+  Kezan: { host: "135.125.119.89", port: 8000 }, // old host: "162.19.28.88", port: 8085
   Gurubashi: { host: "162.19.28.88", port: 8086 },
 };
 export function getTimeString() {
