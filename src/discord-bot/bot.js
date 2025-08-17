@@ -132,7 +132,9 @@ export async function notifyDiscordBot(serverName, isOnline) {
     try {
       const channel = await client.channels.fetch(channelId);
       if (channel && channel.isTextBased()) {
-        await channel.send(`**${serverName}** is now **${statusText}** as of **${time}**`);
+        await channel.send(`
+**${serverName}** is now **${statusText}**
+**${time}**`);
       }
     }
     catch (err) {
