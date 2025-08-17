@@ -51,9 +51,15 @@ async function pollServers() {
       serverStates[name].lastOnline = previous;
       serverStates[name].lastChange = getTimeString();
       serverStates[name].online = current;
-      await notifyDiscordWebhook(name, current);
-      await notifyDiscordBot(name, current);
-      await sendUserAlert(name, current);
+
+      const targetDate = new Date("2025-08-17T05:00:00-07:00");
+      // Activate alerts 1 hour before launch since the server goes up and down before then for stress testing
+      // and we don't want those stress testing alert, only the launch
+      if (new Date() > targetDate) {
+        await notifyDiscordWebhook(name, current);
+        await notifyDiscordBot(name, current);
+        await sendUserAlert(name, current);
+      }
     }
   }
 }
